@@ -1,8 +1,10 @@
+from ler_arquivo import ler_arquivo
+
 def teste():
-    print("Entrei na função teste")
+    pass
 
 
 if __name__ == "__main__":
-    print("hello, world!")
-    teste()
+    ler_arquivo("entrada.txt")
+    
     input("Pressione Enter para continuar...")
