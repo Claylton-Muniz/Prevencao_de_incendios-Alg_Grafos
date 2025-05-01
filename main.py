@@ -5,6 +5,7 @@ def teste():
 
 
 if __name__ == "__main__":
-    ler_arquivo("entrada.txt")
+    dados = ler_arquivo("entrada.txt")
+    print(dados)
     
     input("Pressione Enter para continuar...")
