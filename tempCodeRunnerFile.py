@@ -1,0 +1,1 @@
+f"Area{dados['fogo']}"
