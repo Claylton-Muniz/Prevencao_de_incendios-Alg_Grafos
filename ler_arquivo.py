@@ -33,11 +33,8 @@ def ler_arquivo(arquivo):
     requisitos = {}
     idx += 1  # Pula a linha "Requisitos:"
     for _ in range(num_vertices):
-        v_id, agua_necessaria, equipes_necessarias = map(int, linhas[idx].split())
-        requisitos[v_id] = {
-            'agua': agua_necessaria,
-            'equipes': equipes_necessarias
-        }
+        v_id, agua_necessaria = map(int, linhas[idx].split())
+        requisitos[v_id] = { 'agua': agua_necessaria }
         idx += 1
 
     # Ponto inicial do incêndio

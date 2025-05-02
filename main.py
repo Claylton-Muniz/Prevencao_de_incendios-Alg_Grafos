@@ -7,7 +7,5 @@ if __name__ == "__main__":
     dados = ler_arquivo("entrada.txt")
     
     G = nx.Graph()
-    func.criar_grafo(G, dados)
-    func.mostrar_grafo(G, dados)
-
-
+    postos = func.criar_grafo(G, dados)
+    func.mostrar_grafo(G, dados, postos)
