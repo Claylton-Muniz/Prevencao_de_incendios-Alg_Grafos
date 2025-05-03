@@ -1,8 +1,8 @@
 # Número de vértices
-7
+9
 
 # Número de arestas
-9
+10
 
 # Arestas no formato: vértice-1 custo vértice-2
 0 10 1
@@ -14,6 +14,7 @@
 2 1 5
 1 9 6
 0 4 7
+6 7 8
 
 # Postos de brigadistas (vértices)
 Postos: 0 3 5
@@ -33,6 +34,9 @@ Requisitos:
 4 60
 5 50
 6 20
+7 50
+8 20
+
 
 # Ponto inicial do incêndio
 Fogo: 2
