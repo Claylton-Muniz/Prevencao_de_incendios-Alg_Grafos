@@ -17,10 +17,10 @@
 6 7 8
 
 # Postos de brigadistas (vértices)
-Postos: 0 3 5
+Postos: 7 3 5
 
 # Pontos de coleta de água
-Agua: 1 2
+Agua: 6 4
 
 # Capacidade de água dos caminhões
 Capacidade: 100

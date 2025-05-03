@@ -5,12 +5,14 @@ import os
 import shutil
 
 # modificado para fazer a largura de 1 só vertice
-def bfs_mod(G, m, vert, heap_min, prioridade):
+def bfs_mod(G, m, vert, heap_min, prioridade, postos):
     # python não tem ponteiros então isso está substituindo o u ← G[w].prox e o u ← u.prox
     for u in G.neighbors(vert):
         if m[u] == "verde":
-            m[u] = "vermelho"
-            heapq.heappush(heap_min, (prioridade + 1, u))
+            m[u] = "azul" # É um posto
+            if u not in postos:
+                m[u] = "vermelho"
+                heapq.heappush(heap_min, (prioridade + 1, u))
 
     return m
 
@@ -77,10 +79,12 @@ def mostrar_grafo(G, dados, postos, coleta_agua):
         if test_imp != prioridade:
             # Define cores dos nós
             cores = [
-                # "blue" if vert in postos else
-                # "lightblue" if vert in coleta_agua else
+                "blue" if vert in postos else
+                "yellow" if vert in coleta_agua and 
+                m[vert] == "vermelho" else
                 "red" if atual == "vermelho" or
                 m[vert] == "vermelho" else
+                "lightblue" if vert in coleta_agua else
                 "lightgreen"
                 for vert in G.nodes()
             ]
@@ -96,7 +100,7 @@ def mostrar_grafo(G, dados, postos, coleta_agua):
             input("Enter...")
             
             test_imp = prioridade
-        
-        m = bfs_mod(G, m, atual, heap_min, prioridade)
+            
+        m = bfs_mod(G, m, atual, heap_min, prioridade, postos)
         
         
