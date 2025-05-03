@@ -8,7 +8,9 @@ if __name__ == "__main__":
     postos = [f"V{i}" for i in dados['postos']]
     coleta_agua = [f"V{i}" for i in dados['agua']]
     
+    equipes = [f"V{i}" for i in dados['postos']]
+    
     G = nx.Graph()
     
     func.criar_grafo(G, dados)
-    func.mostrar_grafo(G, dados, postos, coleta_agua)
+    func.mostrar_grafo(G, dados, postos, coleta_agua, equipes)
