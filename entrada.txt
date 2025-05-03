@@ -1,8 +1,8 @@
 # Número de vértices
-9
+10
 
 # Número de arestas
-10
+11
 
 # Arestas no formato: vértice-1 custo vértice-2
 0 10 1
@@ -12,15 +12,16 @@
 2 9 3
 3 4 4
 2 1 5
-1 9 6
+2 9 6
 0 4 7
 6 7 8
+6 4 9
 
 # Postos de brigadistas (vértices)
 Postos: 7 3 5
 
 # Pontos de coleta de água
-Agua: 6 4
+Agua: 8 9
 
 # Capacidade de água dos caminhões
 Capacidade: 100
@@ -36,6 +37,7 @@ Requisitos:
 6 20
 7 50
 8 20
+9 30
 
 
 # Ponto inicial do incêndio

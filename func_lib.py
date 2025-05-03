@@ -73,7 +73,7 @@ def mostrar_grafo(G, dados, postos, coleta_agua):
     heap_min = []
     heapq.heappush(heap_min, (0, origem)) 
     
-    while True:
+    while heap_min:
         prioridade, atual = heapq.heappop(heap_min) # remove da heap
         
         if test_imp != prioridade:
