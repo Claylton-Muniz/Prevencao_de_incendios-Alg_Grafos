@@ -8,7 +8,7 @@ if __name__ == "__main__":
     postos = [f"V{i}" for i in dados['postos']]
     coleta_agua = [f"V{i}" for i in dados['agua']]
     
-    equipes = [f"V{i}" for i in dados['postos']]
+    equipes = postos.copy()
     
     G = nx.Graph()
     

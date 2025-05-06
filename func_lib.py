@@ -62,7 +62,7 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe):
 
     # Declaração inicial das marcas na BFS.
     # Alterei para verde e vermelho para fazer sentido com o fogo
-    m = {v: "verde" for v in G.nodes()}
+    m = {v: ("azul" if v in postos else "verde") for v in G.nodes()}
     m[origem] = "vermelho"
     """
     Foi necessário fazer ela aqui para 
@@ -104,22 +104,30 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe):
             )
 
             passo += 1
-            print(atual, alastramento)
             input("Enter...")
+            print(atual, alastramento)
 
             test_imp = prioridade
 
         for i, v in enumerate(equipe):
+            tam = 0
             for u in list(G.neighbors(atual)) + [atual]:
                 if v == u:
                     continue
                 path = nx.dijkstra_path(G, source=v, target=u, weight="weight")
-                print(f"Menor caminho de {v} até {u}: {path} -> tam: {len(path)}")
-                if len(path) == 2:
-                    acao = "apagando o fogo" if m[u] == "vermelho" else "evitando que o fogo se alastrasse"
-                    print(f"----> A equipe do posto {v} se moveu para {u} {acao}")
-                    equipe[i] = u
-                    break
+                # print(f"Menor caminho de {v} até {u}: {path} -> tam: {len(path)}")
+                if len(path) < tam and u not in postos:
+                    equipe[i] = path[1]
+                    tam = len(path)
+                else:
+                    equipe[i] = path[1]
+                    tam = len(path)
+            acao = "apagando o fogo" if m[equipe[i]] == "vermelho" else "evitando que o fogo se alastrasse"
+            if equipe[i] in list(G.neighbors(atual)) + [atual]:
+                print(f"----> A equipe - {v}, se moveu para {equipe[i]} {acao}")
+                m[equipe[i]] = "amarelo"
+            else:
+                print(f"----> A equipe - {v}, se moveu para {equipe[i]}")
 
         print(f"equipes: {equipe}")
 
