@@ -132,3 +132,71 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe):
         print(f"equipes: {equipe}")
 
         bfs_mod(G, m, atual, alastramento, prioridade, postos, equipe)
+
+def simular_fogo(G, dados, postos, coleta_agua, equipe):
+    origem = f"V{dados['fogo']}"
+    capacidade = dados["capacidade"]
+    requisitos = {f"V{k}": v["agua"] for k, v in dados["requisitos"].items()}
+
+    m = {v: ("azul" if v in postos else "verde") for v in G.nodes()}
+    m[origem] = "vermelho"
+
+    alastramento = []
+    heapq.heappush(alastramento, (0, origem))
+    prioridade_anterior = -1
+    passo = 0
+
+    agua_usada_total = 0
+    originais = equipe.copy()
+    caminho_equipes = {e: [e] for e in originais}
+
+    vertices_salvos = set()
+
+    while alastramento:
+        prioridade, atual = heapq.heappop(alastramento)
+
+        if prioridade != prioridade_anterior:
+            passo += 1
+            prioridade_anterior = prioridade
+
+        agua_usada_nesse_passo = 0
+        for i, v in enumerate(equipe):
+            menor_caminho = None
+            menor_tam = float("inf")
+
+            for u in list(G.neighbors(atual)) + [atual]:
+                if v == u:
+                    continue
+                try:
+                    path = nx.dijkstra_path(G, source=v, target=u, weight="weight")
+                except nx.NetworkXNoPath:
+                    continue
+
+                if len(path) < menor_tam and u not in postos:
+                    menor_caminho = path
+                    menor_tam = len(path)
+
+            if menor_caminho and len(menor_caminho) > 1:
+                novo_destino = menor_caminho[1]
+                equipe[i] = novo_destino
+                caminho_equipes[originais[i]].append(novo_destino)
+
+                if m[novo_destino] == "vermelho":
+                    # Apagar fogo
+                    m[novo_destino] = "amarelo"
+                    vertices_salvos.add(novo_destino)
+
+                    agua_usada = requisitos.get(novo_destino, 0)
+                    agua_usada_nesse_passo += min(agua_usada, capacidade)
+
+        agua_usada_total += agua_usada_nesse_passo
+
+        # Alastrar fogo
+        m = bfs_mod(G, m, atual, alastramento, prioridade, postos, equipe)
+
+        yield {
+            "passo": passo,
+            "agua_usada": agua_usada_nesse_passo,
+            "vertices_salvos": vertices_salvos.copy(),
+            "caminhos": {k: v[-1] for k, v in caminho_equipes.items()}
+        }
