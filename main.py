@@ -1,6 +1,6 @@
 from ler_arquivo import ler_arquivo
 import func_lib as func
-import networkx as nx
+from networkx import Graph
 
 
 if __name__ == "__main__":
@@ -10,7 +10,7 @@ if __name__ == "__main__":
     
     equipes = postos.copy()
     
-    G = nx.Graph()
+    G = Graph()
     
     func.criar_grafo(G, dados)
     func.mostrar_grafo(G, dados, postos, coleta_agua, equipes)
