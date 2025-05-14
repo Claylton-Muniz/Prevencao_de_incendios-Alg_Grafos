@@ -143,8 +143,13 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe):
     
     input("Enter...")
 
+    prioridade, atual = heapq.heappop(alastramento)
+    print(m[atual])
+    input("test...")
+    
     while fogo:
-        prioridade, atual = heapq.heappop(alastramento)  # remove da heap
+        if m[atual] != "vermelho":
+            prioridade, atual = heapq.heappop(alastramento)  # remove da heap
         
         for i, v in enumerate(equipe):
             tam = 0
@@ -195,4 +200,7 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe):
         input("Enter...")
 
         print(f"equipes: {equipe}")
-
+        
+        if not alastramento:
+            print("O fogo foi completamente controlado.")
+            break
