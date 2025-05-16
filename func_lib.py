@@ -82,7 +82,7 @@ def movimento_equipes(G, m, equipe, postos, fogo, capacidade_equipe, requisitos)
         vizinhos = set(chain.from_iterable(vizinhos))
         vizinhos = [vert for vert in vizinhos if m[vert] != "amarelo"]
 
-        print(f"\nvizinhos {vizinhos}")
+        # print(f"\nvizinhos {vizinhos}")
 
         for u in vizinhos:
             if v == u:
@@ -136,7 +136,7 @@ def movimento_equipes(G, m, equipe, postos, fogo, capacidade_equipe, requisitos)
             print(f"----> A equipe - {i}, se moveu para {equipe[i]} e reabateceu completamente!")
         else:
             print(f"----> A equipe - {i}, se moveu para {equipe[i]}")
-    print(f"requisitos {requisitos}\n capacidade {capacidade_equipe}")
+    # print(f"requisitos {requisitos}\n capacidade {capacidade_equipe}")
 
 
 def mostrar_grafo(G, dados, postos, coleta_agua, equipe, capacidade_equipe, requisitos):
