@@ -4,7 +4,7 @@ import heapq
 import shutil
 import matplotlib.pyplot as plt
 
-from func_graf import alastrar, dijkstra_caminho
+from func_graf import alastrar, dijkstra_caminho, peso_total_caminho
 from networkx import draw, draw_networkx_edge_labels, spring_layout, get_edge_attributes
 
 
@@ -73,44 +73,73 @@ def rederinzar_imagem(
     input("Enter...")
 
 
-def movimento_equipes(G, m, atual, equipe, postos, fogo):
+def movimento_equipes(G, m, equipe, postos, fogo, capacidade_equipe, requisitos):
     for i, v in enumerate(equipe):
-        tam = float("inf")
-        
+        menor_peso = float("inf")
+        capaz = True
+
         vizinhos = [list(G.neighbors(vert)) + [vert] for vert in fogo]
         vizinhos = set(chain.from_iterable(vizinhos))
-        
-        # print(f"vizinhos {vizinhos}")
+        vizinhos = [vert for vert in vizinhos if m[vert] != "amarelo"]
 
-        # u anda nos vizinhos do fogo ou no fogo
+        print(f"\nvizinhos {vizinhos}")
+
         for u in vizinhos:
             if v == u:
                 continue
-            
+
+            if requisitos[u] > capacidade_equipe[i]:
+                capaz = False
+                continue
+
+            capaz = True
             caminho = dijkstra_caminho(G, v, u)
+
             if caminho[-1] in postos:
                 continue
-            
-            if len(caminho) < tam and u not in postos and caminho[1] not in equipe:
-                equipe[i] = caminho[1]
-                tam = len(caminho)
-        if equipe[i] == v:
-            equipe[i] = caminho[1]
 
-        # texto para diexar bonito, não afeta a lógica
+            peso_caminho = peso_total_caminho(G, caminho)
+            if peso_caminho < menor_peso and u not in postos and caminho[1] not in equipe:
+                equipe[i] = caminho[1]
+                menor_peso = peso_caminho
+
+        if equipe[i] == v and capaz:
+            equipe[i] = caminho[1]
+        elif not capaz:
+            for u in postos:
+                if v == u:
+                    print(f"Equipe {i} reabasteceu completamente!!")
+                    capacidade_equipe[i] = 100
+                    break
+
+                caminho = dijkstra_caminho(G, v, u)
+                peso_caminho = peso_total_caminho(G, caminho)
+                print(caminho)
+                if peso_caminho < menor_peso:
+                    print(f"es: {caminho}")
+                    equipe[i] = caminho[1]
+                    menor_peso = peso_caminho
+
+        # Texto bonito...
         acao = (
             "apagando o fogo"
             if m[equipe[i]] == "vermelho"
             else "evitando que o fogo se alastrasse"
         )
         if equipe[i] in vizinhos:
-            print(f"----> A equipe que estava em {v}, se moveu para {equipe[i]} {acao}")
+            print(f"----> A equipe - {i} que estava em {v}, se moveu para {equipe[i]} {acao}")
+            capacidade_equipe[i] -= requisitos[equipe[i]]
+            print(f"\tAgora a equipe tem {capacidade_equipe[i]} de capacidade para apagar o resto do fogo")
+            requisitos[equipe[i]] = 0
             m[equipe[i]] = "amarelo"
+        elif equipe[i] in postos:
+            print(f"----> A equipe - {i}, se moveu para {equipe[i]} e reabateceu completamente!")
         else:
-            print(f"----> A equipe - {v}, se moveu para {equipe[i]}")
+            print(f"----> A equipe - {i}, se moveu para {equipe[i]}")
+    print(f"requisitos {requisitos}\n capacidade {capacidade_equipe}")
 
 
-def mostrar_grafo(G, dados, postos, coleta_agua, equipe):
+def mostrar_grafo(G, dados, postos, coleta_agua, equipe, capacidade_equipe, requisitos):
     # Cria a pasta se não existir, ou limpa se já existir
     pasta_imgs = "imgs"
     if os.path.exists(pasta_imgs):
@@ -163,7 +192,22 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe):
             else:
                 break
             
-        movimento_equipes(G, m, atual, equipe, postos, fogo)
+        # renderiza alastramento - antes do movimento para ver oq aconteceu
+        # rederinzar_imagem(
+        #     G,
+        #     m,
+        #     pos,
+        #     edge_labels,
+        #     pasta_imgs,
+        #     postos,
+        #     equipe,
+        #     coleta_agua,
+        #     atual,
+        #     passo,
+        #     alastramento,
+        # )
+            
+        movimento_equipes(G, m, equipe, postos, fogo, capacidade_equipe, requisitos)
 
         # Removendo os elementos comuns
         fogo = [x for x in fogo if m[x] not in ("amarelo", "azul")]

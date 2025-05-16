@@ -1,6 +1,10 @@
 import heapq
 
 
+def peso_total_caminho(G, caminho):
+    return sum(G[caminho[i]][caminho[i + 1]]['weight'] for i in range(len(caminho) - 1))
+
+
 def dijkstra_caminho(G, origem, destino):
     c = {node: float('inf') for node in G} # c[i] = infinito
     prev = {node: None for node in G} # guarda nó anterior para construir o caminho

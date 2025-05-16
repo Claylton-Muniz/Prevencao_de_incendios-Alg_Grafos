@@ -27,7 +27,7 @@ Agua: 8 9
 # Capacidade de água dos caminhões
 Capacidade: 100
 
-# Requisitos por vértice: vertex_id agua_necessaria equipes_necessarias
+# Requisitos por vértice: vert_id agua_necessaria
 Requisitos:
 0 40
 1 30
