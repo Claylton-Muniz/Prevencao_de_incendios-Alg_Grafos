@@ -36,15 +36,15 @@ def dijkstra_caminho(G, origem, destino):
 
 
 # modificado para fazer a largura de 1 só vertice
-def bfs_mod(G, m, vert, alastramento, prioridade, postos, equipes, fogo):
+def alastrar(G, m, vert, alastramento, prioridade, postos, equipes, fogo):
     # python não tem ponteiros então isso está substituindo o u ← G[w].prox e o u ← u.prox
-    for u in G[vert]:
+    for u in G.neighbors(vert):
         if m[u] == "verde":
             if m[u] != "azul" and m[u] != "amarelo":
                 m[u] = "vermelho"
                 fogo.append(u)
                 heapq.heappush(alastramento, (prioridade + 1, u))
                 
-    print(f"eq: {equipes} \nm: {m}")
+    # print(f"eq: {equipes} \nm: {m}\nal: {alastramento}")
 
     return m
