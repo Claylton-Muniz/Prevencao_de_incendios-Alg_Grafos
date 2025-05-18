@@ -65,12 +65,12 @@ def rederinzar_imagem(
         for vert in G.nodes()
     ]
     
-    print(f"Passo: {passo}")
+    if passo != -1:
+        print(f"\nPasso: {passo}")
 
     # Cria a imagem do passo atual
     criar_imagem(G, pos, cores, edge_labels, pasta_imgs, passo, atual, alastramento)
-
-    input("Enter...")
+        
 
 
 def movimento_equipes(G, m, equipe, postos, fogo, capacidade_equipe, requisitos):
@@ -114,9 +114,9 @@ def movimento_equipes(G, m, equipe, postos, fogo, capacidade_equipe, requisitos)
 
                 caminho = dijkstra_caminho(G, v, u)
                 peso_caminho = peso_total_caminho(G, caminho)
-                print(caminho)
+                # print(caminho)
                 if peso_caminho < menor_peso:
-                    print(f"es: {caminho}")
+                    # print(f"es: {caminho}")
                     equipe[i] = caminho[1]
                     menor_peso = peso_caminho
 
@@ -130,6 +130,7 @@ def movimento_equipes(G, m, equipe, postos, fogo, capacidade_equipe, requisitos)
             print(f"----> A equipe - {i} que estava em {v}, se moveu para {equipe[i]} {acao}")
             capacidade_equipe[i] -= requisitos[equipe[i]]
             print(f"\tAgora a equipe tem {capacidade_equipe[i]} de capacidade para apagar o resto do fogo")
+            print(f"\tPois ela usou {requisitos[equipe[i]]}L de água")
             requisitos[equipe[i]] = 0
             m[equipe[i]] = "amarelo"
         elif equipe[i] in postos:
@@ -181,6 +182,7 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe, capacidade_equipe, requ
         passo,
         alastramento,
     )
+    input("Enter...")
 
     prioridade, atual = heapq.heappop(alastramento)
 
@@ -208,6 +210,7 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe, capacidade_equipe, requ
         # )
             
         movimento_equipes(G, m, equipe, postos, fogo, capacidade_equipe, requisitos)
+        
 
         # Removendo os elementos comuns
         fogo = [x for x in fogo if m[x] not in ("amarelo", "azul")]
@@ -226,6 +229,8 @@ def mostrar_grafo(G, dados, postos, coleta_agua, equipe, capacidade_equipe, requ
             passo,
             alastramento,
         )
+        
+        input("Enter...")
 
         # print(f"fogo: {fogo}")
 
