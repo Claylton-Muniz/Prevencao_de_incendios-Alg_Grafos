@@ -18,7 +18,7 @@ A descrição detalhada do problema proposto está disponível no arquivo "descr
 
 
 ### Descrição resumida da implementação:<br>
--A distribuição dos postos, pontos de coleta e início do incêndio são lidas de um arquivo.txt base;<br>
+-A distribuição dos postos, pontos de coleta e início do incêndio são lidas de "entrada.txt";<br>
 -A distribuição é simulada por meio da implementação de um grafo conexo e não direcionado;<br>
 -A propagação do fogo e o movimento dos brigadistas e simulado a cada instante de tempo;<br>
 -Os vértices em chamas e a quantidade de água de cada brigada é mostrada no console junto com as demais informações a cada instante;<br>
