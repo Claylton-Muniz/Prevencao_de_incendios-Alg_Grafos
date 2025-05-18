@@ -4,6 +4,8 @@
 
 O projeto foi desenvolvido usando exclusivamente a linguagem de programação Python e duas de suas bibliotecas: matplotlib (Para a visualização do grafo) e a networkx (que auxilia a matplotlib).
 A descrição detalhada do problema proposto está disponível no arquivo descriçãoProblema.pdf<br>
+
+
 Descrição resumida do problema: <br>
 -Criar um grafo, com diversos vértices e arestas que simulam áreas florestais;<br>
 -Distribuir postos de brigadistas;<br>
