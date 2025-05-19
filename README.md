@@ -23,3 +23,5 @@ A descrição detalhada do problema proposto está disponível no arquivo "descr
 -A propagação do fogo e o movimento dos brigadistas e simulado a cada instante de tempo;<br>
 -Os vértices em chamas e a quantidade de água de cada brigada é mostrada no console junto com as demais informações a cada instante;<br>
 -A simulação é finalizada quando não há mais nenhum vértice em chamas.<br>
+
+Segue o Link para a explicação detalhada do funcionamento do código: https://youtu.be/-ltqO2Yrz8w
